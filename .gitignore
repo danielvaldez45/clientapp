@@ -1,0 +1,4 @@
+Dockerfile.copy
+nb-configuration.xml
+logs
+target/
