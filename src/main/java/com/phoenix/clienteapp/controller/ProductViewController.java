@@ -25,12 +25,12 @@ public class ProductViewController implements Serializable {
 
     @Inject
     private ProductService service;
-   
-   @PostConstruct
-   public void init(){
-      this.products = service.getProducts();
-   }
-   
+
+    @PostConstruct
+    public void init() {
+        this.products = service.getProducts();
+    }
+
     public List<Product> getProducts() {
         return products;
     }
@@ -55,8 +55,6 @@ public class ProductViewController implements Serializable {
         this.selectedProducts = selectedProducts;
     }
 
-   
-
     public void setService(ProductService service) {
         this.service = service;
     }
@@ -69,13 +67,15 @@ public class ProductViewController implements Serializable {
         if (this.selectedProduct.getId() == 0) {
             //Salvar en el array
             //Obtener el ultimo id
-            // products.
-            this.selectedProduct.setId(this.getLastIdProduct(products));
-            products.add(this.selectedProduct);
+            // products
+            service.saveProduct(this.selectedProduct);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Se agrego un producto"));
         } else {
-           FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Se actualizo un producto"));
+             service.updateProduct(this.selectedProduct);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Se actualizo un producto"));
         }
+        //Vuelve a leer los productos de la base de datos
+        this.init();
         PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:data-products");
     }
@@ -88,18 +88,13 @@ public class ProductViewController implements Serializable {
     }
 
     /**
-     * Obtiene el ultimo id de la coleccion de productos. Suma 1 al ultimo id de
-     * referencia..
+     * Hace un borrado logico
      *
      */
-    int getLastIdProduct(List<Product> products) {
-        int lastId = -10;
-        for (Product product : products) {
-            if (lastId < product.getId()) {
-                lastId = product.getId();
-            }
-        }
-        lastId++;
-        return lastId;
+    public void changeStateProduct() {
+        service.changeStateProduct(this.selectedProduct.getId());
+        this.init();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Removed"));
+        PrimeFaces.current().ajax().update("form:messages", "form:data-products");  
     }
 }

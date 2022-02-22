@@ -3,6 +3,7 @@ package com.phoenix.clienteapp.service;
 import com.phoenix.clienteapp.productDAO.ProductDataAccess;
 
 import com.phoenix.clienteapp.model.Product;
+import com.phoenix.clienteapp.productDAO.ProductDataAccess;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,7 +16,11 @@ import javax.inject.Named;
 public class ProductService {
 
     private List<Product> products;
-
+    private ProductDataAccess dataAccess;
+    
+    public ProductService(){
+        dataAccess = new ProductDataAccess();
+    }
     
     public void init() {
         products = new ArrayList<>();
@@ -25,8 +30,7 @@ public class ProductService {
         products.add(new Product(4, "Blue T-Shirt", "Product Description"));
         products.add(new Product(5, "Bracelet", "Product Description"));
     }
-    
-    
+
     public List<Product> getProducts() {
         ProductDataAccess prodt = new ProductDataAccess();
         return prodt.getProducts();
@@ -44,11 +48,22 @@ public class ProductService {
             }
 
             return randomList;
-        }
-
-        else {
+        } else {
             return new ArrayList<>(products.subList(0, size));
         }
 
+    }
+
+    public void changeStateProduct(int id) {
+        ProductDataAccess prodt = new ProductDataAccess();
+        prodt.deleteLogicProduct(id);
+    }
+
+    public void saveProduct(Product selectedProduct) {
+        dataAccess.save(selectedProduct);
+    }
+
+    public void updateProduct(Product selectedProduct) {
+        dataAccess.updateProduct(selectedProduct.getId(), selectedProduct);
     }
 }

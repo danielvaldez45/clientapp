@@ -37,7 +37,7 @@
                     <!-- Aqui van mas eventos Ajax -->
                     <p:column selectionMode="multiple" exportable="false"></p:column>
 
-                    <p:column headerText="Name">
+                    <p:column headerText="Id">
                         <h:outputText value="#{product.id}" />
                     </p:column>
                     <p:column headerText="Name">
@@ -45,6 +45,9 @@
                     </p:column>
                     <p:column headerText="Description">
                         <h:outputText value="#{product.description}" />
+                    </p:column>
+                    <p:column headerText="Estatus">
+                        <h:outputText value="#{product.status}" />
                     </p:column>
                     <p:column exportable="false">
                         <p:commandButton icon="pi pi-pencil" update=":form:manage-product-content"
@@ -72,6 +75,10 @@
                                 <p:outputLabel for="description">Description</p:outputLabel> 
                                 <p:inputTextarea id="description" value="#{productView.selectedProduct.description}"/>
                             </div>
+<!--                            <div class="p-field">
+                                <p:outputLabel for="status">Status</p:outputLabel> 
+                                <p:inputTextarea id="description" value="#{productView.selectedProduct.status}"/>
+                            </div>-->
                         </p:outputPanel>
                     </p:outputPanel>
                     <f:facet name="footer">
@@ -84,7 +91,7 @@
 
                 <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
                                  message="Delete the product?" header="Confirm" severity="warn">
-                    <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{productView.deleteProduct}"
+                    <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{productView.changeStateProduct}"
                                      process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
                     <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                      onclick="PF('deleteProductDialog').hide()"/>

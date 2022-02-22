@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.phoenix.clienteapp.productDAO;
+
 import com.phoenix.clienteapp.model.Product;
 
 import java.sql.Connection;
@@ -33,18 +34,36 @@ public class ProductDataAccess {
     // Crear un libro
     public void save(Product product) {
         // String table = "\"" + TABLE + "\"";
-        String sql = "INSERT INTO products VALUES (?, ?)";
+        String sql;
+        sql = "INSERT INTO products "
+                + "("
+                + "cve_product, "
+                + "product_name, "
+                + "product_desc, "
+                + "status"
+                + ")"
+                + "VALUES (?, ?, ?, ?)";
         System.out.println(sql);
-        ConnectionDatabase connectDB = new ConnectionDatabase();
-        conn = connectDB.getConnection();
 
         try {
+            ConnectionDatabase connectDB = new ConnectionDatabase();
+            conn = connectDB.getConnection();
+            //Obtener el ultimo id de la tabla
+            int lastId = getLastIdProduct();
+            //lastId++;
+            product.setId(lastId);
             PreparedStatement stmt = conn.prepareStatement(sql);
+            
+            //Preparamos la consulta
             stmt.setInt(1, product.getId());
             stmt.setString(2, product.getName());
+            stmt.setString(3, product.getDescription());
+            stmt.setString(4, "1");
+            
             if (stmt.executeUpdate() == 1) {
                 System.out.println("Se inserto un registro en la base de datos");
             }
+
             stmt.close();
             conn.close();
         } catch (SQLException ex) {
@@ -55,15 +74,16 @@ public class ProductDataAccess {
     public List<Product> getProducts() {
         Connection conn;
         List<Product> products = new ArrayList<>();
-       //                                + "cve_product,"
-       //                                + "product_name,"
-       //                                + "product_desc,"
-       //                                + "status"
-       String sql = "SELECT  * "
-                      + "FROM products "
-                      + "where status like '1';";
-//        this.setSqlQuery(sql);
 
+        String sql;
+//        sql = "SELECT "
+//                + "cve_product,"
+//                + "product_name,"
+//                + "product_desc,"
+//                + "status"
+        sql = "SELECT *"
+                + "FROM products "
+                + "where status like '1';";
         try {
             ConnectionDatabase connectDB = new ConnectionDatabase();
             conn = connectDB.getConnection();
@@ -111,7 +131,13 @@ public class ProductDataAccess {
     // Recibe un objeto y arma una query.
     public void updateProduct(int id, Product product) {
         //Por seguridad es importan escapar ciertos caracteres y encerrar entre comillas simples.
-        String sql = "UPDATE  products SET name = ? where id = ?";
+        String sql;
+        sql = "UPDATE  products "
+                + "SET"
+                + " product_name = ? ,"
+                + " product_desc = ? ,"
+                + " status = ? "
+                + "where cve_product = ?";
         this.setSqlQuery(sql);
 
         ConnectionDatabase connectDB = new ConnectionDatabase();
@@ -120,7 +146,9 @@ public class ProductDataAccess {
             //Preparamos la query
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, product.getName());
-            stmt.setInt(2, id);
+            stmt.setString(2, product.getDescription());
+            stmt.setString(3, product.getStatus());
+            stmt.setInt(4, product.getId());
             System.out.println(stmt.toString());
             if (stmt.executeUpdate() == 1) {
                 System.out.println("El registro se actualizado con exito!");
@@ -132,6 +160,11 @@ public class ProductDataAccess {
         }
     }
 
+    /**
+     * Hace un borrado fisico en la base de datos.
+     *
+     *
+     */
     public void deleteProduct(int id) {
         String sql = "DELETE FROM products WHERE id= ?";
         ConnectionDatabase connectDB = new ConnectionDatabase();
@@ -146,6 +179,28 @@ public class ProductDataAccess {
             stmt.close();
             conn.close();
             System.out.print("Se elimino el registro de la base de datos");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Hace un borrado logico en la base de datos.
+     *
+     *
+     */
+    public void deleteLogicProduct(int id) {
+        //Por seguridad es importan escapar ciertos caracteres y encerrar entre comillas simples.
+        String sql = "UPDATE  products SET status = 0 where cve_product = " + id;
+        this.setSqlQuery(sql);
+
+        ConnectionDatabase connectDB = new ConnectionDatabase();
+        conn = connectDB.getConnection();
+        try {
+            st = conn.createStatement();
+            st.executeUpdate(sql);
+            st.close();
+            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -170,5 +225,38 @@ public class ProductDataAccess {
     @Override
     public String toString() {
         return "SQL query: " + this.sqlQuery + "\n";
+    }
+
+    /**
+     * Obtiene el ultimo id de la coleccion de productos. Suma 1 al ultimo id de
+     * referencia..
+     *
+     */
+    int getLastIdProduct() {
+        int cve_product = 0;
+        String sql;
+        sql = "SELECT "
+                + "MAX(cve_product)"
+                + "FROM products "
+                + "WHERE status like '1';";
+        try {
+            ConnectionDatabase connectDB = new ConnectionDatabase();
+            conn = connectDB.getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+
+            //Obtiene el id mas alto de la tabla products
+            while (rs.next()) {
+                cve_product = rs.getInt("max");
+            }
+
+            st.close();
+            rs.close();
+//            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        cve_product++;
+        return cve_product;
     }
 }
