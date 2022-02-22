@@ -1,5 +1,7 @@
 package com.phoenix.clienteapp.service;
 
+import com.phoenix.clienteapp.productDAO.ProductDataAccess;
+
 import com.phoenix.clienteapp.model.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class ProductService {
     }
 
     public List<Product> getProducts() {
+        this.products = new ProductDataAccess().getProducts();
         return new ArrayList<>(products);
     }
 

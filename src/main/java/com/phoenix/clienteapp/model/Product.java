@@ -5,6 +5,7 @@ public class Product  {
     private int id;
     private String name;
     private String description;
+    private String status;
 
     public Product() {
 
@@ -14,6 +15,7 @@ public class Product  {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.status = "1";
     }
     
     public Product(String name, String description) {
@@ -45,9 +47,17 @@ public class Product  {
         this.description = description;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", name=" + name + ", description=" + description + '}';
+        return "Product{" + "id=" + id + ", name=" + name + ", description=" + description + ", status=" + status + '}';
     }
 
 }
