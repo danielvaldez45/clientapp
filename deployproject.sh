@@ -25,6 +25,20 @@ deploywar(){
    cat logs/server.logs 
  fi
 
- $bin/asadmin undeploy mavenproject3-1.0-SNAPSHOT
- $bin/asadmin deploy ./target/mavenproject3-1.0-SNAPSHOT.war
+ undeploy
+ deploy
 }
+
+#Sirve para desplegar un war en el servidor. target: Glassfish - $GLASSFISH_HOME
+deploy(){
+ echo $1
+ [ ! -z $1 ] && warPackage=$1 || warPackage=./target/mavenproject3-1.0-SNAPSHOT.war
+ $bin/asadmin deploy $warPackage
+}
+
+#Sirve para quita la package war del servidor. target: Glassfish - $GLASSFISH_HOME
+undeploy(){
+ $bin/asadmin undeploy mavenproject3-1.0-SNAPSHOT
+}
+
+

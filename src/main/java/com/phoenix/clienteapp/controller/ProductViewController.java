@@ -25,10 +25,18 @@ public class ProductViewController implements Serializable {
 
     @Inject
     private ProductService service;
+   
+   @PostConstruct
+   public void init(){
+      this.products = service.getProducts();
+   }
+   
+    public List<Product> getProducts() {
+        return products;
+    }
 
-    @PostConstruct
-    public void init() {
-        products = service.getProducts();
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public Product getSelectedProduct() {
@@ -47,9 +55,7 @@ public class ProductViewController implements Serializable {
         this.selectedProducts = selectedProducts;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
+   
 
     public void setService(ProductService service) {
         this.service = service;

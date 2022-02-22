@@ -25,20 +25,24 @@
             <version>8.0.1</version>
             <scope>provided</scope>
         </dependency>
-
 <!--        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>${jakartaee}</version>
             <scope>provided</scope>
         </dependency>-->
-	<!-- Engine CDI -->
-	<dependency>
+        <!--Engine CDI Para tomcat necesita esta depencencia para glassfish NO--> 
+<!--        <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet</artifactId>
             <version>2.4.8.Final</version>
+        </dependency>-->
+        <!-- PostgreSQL dependency -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.2</version>
         </dependency>
-
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>

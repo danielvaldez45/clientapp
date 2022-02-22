@@ -55,23 +55,24 @@ public class ProductDataAccess {
     public List<Product> getProducts() {
         Connection conn;
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT "
-                                + "cve_product"
-                                +  "product_name"
-                                + "product_desc"
-                                + "status"
+       //                                + "cve_product,"
+       //                                + "product_name,"
+       //                                + "product_desc,"
+       //                                + "status"
+       String sql = "SELECT  * "
                       + "FROM products "
-                      + "where statusl like '1';";
-        this.setSqlQuery(sql);
+                      + "where status like '1';";
+//        this.setSqlQuery(sql);
 
         try {
             ConnectionDatabase connectDB = new ConnectionDatabase();
             conn = connectDB.getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery(this.getSqlQuery());
+            rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                products.add(new Product(rs.getInt("id"), rs.getString("name"), rs.getString("name")));
+                products.add(new Product(rs.getInt("cve_product"), rs.getString("product_name"), rs.getString("product_desc")));
+                System.out.print(products.toString());
             }
             st.close();
             rs.close();

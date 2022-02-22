@@ -16,7 +16,7 @@ public class ProductService {
 
     private List<Product> products;
 
-    @PostConstruct
+    
     public void init() {
         products = new ArrayList<>();
         products.add(new Product(1, "Bamboo Watch", "Product Description"));
@@ -25,10 +25,11 @@ public class ProductService {
         products.add(new Product(4, "Blue T-Shirt", "Product Description"));
         products.add(new Product(5, "Bracelet", "Product Description"));
     }
-
+    
+    
     public List<Product> getProducts() {
-        this.products = new ProductDataAccess().getProducts();
-        return new ArrayList<>(products);
+        ProductDataAccess prodt = new ProductDataAccess();
+        return prodt.getProducts();
     }
 
     public List<Product> getProducts(int size) {

@@ -6,7 +6,7 @@ public class ConnectionDatabase {
    private Connection conn;
 
    //Este constructor solo inicializa la conexion a la base.
-   ConnectionDatabase() {
+   public ConnectionDatabase() {
      String url = "jdbc:postgresql://localhost:5432/postgres";
      //String url = "jdbc:postgresql://localhost/test?user=fred&password=secret&ssl=true";
      String driver = "org.postgresql.Driver";
