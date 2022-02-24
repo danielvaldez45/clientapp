@@ -1,6 +1,6 @@
-package com.phoenix.clienteapp.controller;
+package com.phoenix.clienteapp.controllers;
 
-import com.phoenix.clienteapp.model.Product;
+import com.phoenix.clienteapp.models.Product;
 import com.phoenix.clienteapp.service.ProductService;
 
 import java.io.Serializable;

@@ -7,7 +7,13 @@
     </h:head>
     <h:body>
         <div class="card">
-            <h:form >
+            <h:form class="form-login">
+                <p:commandButton value="new" icon="pi pi-plus" actionListener="#{viewLogin.newLogin}"
+                                 update=":form:manage-product-content" oncomplete="PF('manageProductDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                    <p:resetInput target=":form:manage-product-content"/>
+                </p:commandButton>
+
 
                 <div class="p-field p-grid">
                     <label for="username" class="p-col-fixed" style="width:100px">username: </label>
@@ -21,8 +27,6 @@
                         <p:inputText id="password" type="password" />
                     </div>
                 </div>
-                <p:commandButton actionListener="newLogin"/>
-
             </h:form>
         </div>
     </h:body>

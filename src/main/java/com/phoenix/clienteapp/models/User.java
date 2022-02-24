@@ -1,4 +1,4 @@
-package com.phoenix.clienteapp.model;
+package com.phoenix.clienteapp.models;
 
 public class User {
 

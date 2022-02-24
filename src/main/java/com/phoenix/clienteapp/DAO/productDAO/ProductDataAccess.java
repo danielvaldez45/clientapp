@@ -4,7 +4,7 @@
  */
 package com.phoenix.clienteapp.DAO.productDAO;
 
-import com.phoenix.clienteapp.model.Product;
+import com.phoenix.clienteapp.models.Product;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
