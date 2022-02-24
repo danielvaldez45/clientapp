@@ -1,9 +1,9 @@
 package com.phoenix.clienteapp.service;
 
-import com.phoenix.clienteapp.productDAO.ProductDataAccess;
+import com.phoenix.clienteapp.DAO.productDAO.ProductDataAccess;
 
 import com.phoenix.clienteapp.model.Product;
-import com.phoenix.clienteapp.productDAO.ProductDataAccess;
+import com.phoenix.clienteapp.DAO.productDAO.ProductDataAccess;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

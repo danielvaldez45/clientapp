@@ -1,4 +1,4 @@
-package com.phoenix.clienteapp.productDAO;
+package com.phoenix.clienteapp.DAO.productDAO;
 
 import java.sql.*;
 

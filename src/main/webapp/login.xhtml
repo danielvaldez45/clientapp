@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bienvenido</title>
+    </h:head>
+    <h:body>
+        <div class="card">
+            <h:form >
+
+                <div class="p-field p-grid">
+                    <label for="username" class="p-col-fixed" style="width:100px">username: </label>
+                    <div class="p-col">
+                        <p:inputText id="username" type="text" />
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <label for="password" class="p-col-fixed" style="width:100px">Contrasena: </label>
+                    <div class="p-col">
+                        <p:inputText id="password" type="password" />
+                    </div>
+                </div>
+                <p:commandButton actionListener="newLogin"/>
+
+            </h:form>
+        </div>
+    </h:body>
+</html>
