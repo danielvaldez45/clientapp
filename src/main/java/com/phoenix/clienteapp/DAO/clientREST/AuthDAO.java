@@ -1,7 +1,11 @@
 package com.phoenix.clienteapp.DAO.clientREST;
 
 import com.phoenix.clienteapp.models.User;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
+import javax.json.bind.Jsonb;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -9,6 +13,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.primefaces.shaded.json.JSONObject;
 
 /**
@@ -18,7 +23,7 @@ import org.primefaces.shaded.json.JSONObject;
  *
  */
 @ApplicationScoped
-public class AuthDAO {
+public class AuthDAO implements Serializable {
 
     private String username;
     private String password;
@@ -45,14 +50,15 @@ public class AuthDAO {
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
 
         if (response.getStatus() == 200) {
-            System.out.print(response.toString());
-            //System.out.print(response.readEntity(Object.class));
-            JSONObject json = new JSONObject(response.readEntity(Object.class));
-           System.out.print("########################################");
-           System.out.print(json.optBoolean("isRegister"));
-           System.out.print("########################################");
-           
-            return json.optBoolean("isRegister");
+//            System.out.print(response.toString());
+
+            String res = response.readEntity(String.class);
+            System.out.println(res.toString());
+
+            JSONObject parser = new JSONObject(res);
+            if (parser.getBoolean("isRegister")) {
+                return true;
+            }
         }
         return false;
     }
