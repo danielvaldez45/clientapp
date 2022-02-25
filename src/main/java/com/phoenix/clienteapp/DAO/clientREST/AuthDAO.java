@@ -4,8 +4,11 @@ import com.phoenix.clienteapp.models.User;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -28,20 +31,22 @@ public class AuthDAO {
     //Get Request
     //POST Request: Mando una peticion parametrizada
     public boolean login(User user) {
+        Client client;
+        Response response;
+
         String username = user.getUsername();
         String password = user.getPassword();
+
+        client = ClientBuilder.newClient();
+        WebTarget resourceTarget = client.target("http://192.168.1.62:8181/login");
+
+        response = resourceTarget.request()
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
         
-        if (username == "daniel210" && password == "qwerty210") {
-            return true;
+        if (response.getStatus() == 200) {
+            System.out.print(response.toString());
+            System.out.print(response.getMetadata());
         }
-        //Aqui va mi implementacion para consumir el api
-
-        Client client = ClientBuilder.newClient();
-        WebTarget myResource = client.target("http://localhost:8080/login");
-
-        String response = myResource.request(MediaType.APPLICATION_JSON)
-                .get(String.class);
-        
         return false;
     }
 

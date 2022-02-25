@@ -2,6 +2,7 @@ package com.phoenix.clienteapp.controllers;
 
 import com.phoenix.clienteapp.DAO.clientREST.AuthDAO;
 import com.phoenix.clienteapp.models.User;
+import java.io.Serializable;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

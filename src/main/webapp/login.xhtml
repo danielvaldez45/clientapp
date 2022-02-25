@@ -7,26 +7,20 @@
     </h:head>
     <h:body>
         <div class="card">
-            <h:form class="form-login">
-                <p:commandButton value="new" icon="pi pi-plus" actionListener="#{viewLogin.newLogin}"
-                                 update=":form:manage-product-content" oncomplete="PF('manageProductDialog').show()"
-                                 styleClass="ui-button-success" style="margin-right: .5rem">
-                    <p:resetInput target=":form:manage-product-content"/>
-                </p:commandButton>
+            <h:form id="registrationForm">
+                <p:panel header="Registration Form" style="width: 500px;">
+                    <p:messages/>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Username:"/>
+                        <p:inputText id="userName" value="#{viewLogin.userLogin.username}" label="UserName" />      
+                        
+                        <p:outputLabel value="Password:"/>
+                        <p:password id="password" value="#{viewLogin.userLogin.password}" label="Password"/>
 
-
-                <div class="p-field p-grid">
-                    <label for="username" class="p-col-fixed" style="width:100px">username: </label>
-                    <div class="p-col">
-                        <p:inputText id="username" type="text" />
-                    </div>
-                </div>
-                <div class="p-field p-grid">
-                    <label for="password" class="p-col-fixed" style="width:100px">Contrasena: </label>
-                    <div class="p-col">
-                        <p:inputText id="password" type="password" />
-                    </div>
-                </div>
+                        <p:outputLabel value=""/>
+                        <p:commandButton action="#{viewLogin.requestLogin}" value="Entrar" update="registrationForm"/>
+                    </h:panelGrid>
+                </p:panel>
             </h:form>
         </div>
     </h:body>
