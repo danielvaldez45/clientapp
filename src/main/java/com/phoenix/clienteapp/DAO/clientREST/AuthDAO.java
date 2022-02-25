@@ -9,6 +9,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.primefaces.shaded.json.JSONObject;
 
 /**
  *
@@ -42,10 +43,16 @@ public class AuthDAO {
 
         response = resourceTarget.request()
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
-        
+
         if (response.getStatus() == 200) {
             System.out.print(response.toString());
-            System.out.print(response.getMetadata());
+            //System.out.print(response.readEntity(Object.class));
+            JSONObject json = new JSONObject(response.readEntity(Object.class));
+           System.out.print("########################################");
+           System.out.print(json.optBoolean("isRegister"));
+           System.out.print("########################################");
+           
+            return json.optBoolean("isRegister");
         }
         return false;
     }

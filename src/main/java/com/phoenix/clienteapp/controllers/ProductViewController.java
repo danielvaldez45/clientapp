@@ -71,7 +71,7 @@ public class ProductViewController implements Serializable {
             service.saveProduct(this.selectedProduct);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Se agrego un producto"));
         } else {
-             service.updateProduct(this.selectedProduct);
+            service.updateProduct(this.selectedProduct);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Se actualizo un producto"));
         }
         //Vuelve a leer los productos de la base de datos
@@ -95,6 +95,6 @@ public class ProductViewController implements Serializable {
         service.changeStateProduct(this.selectedProduct.getId());
         this.init();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Removed"));
-        PrimeFaces.current().ajax().update("form:messages", "form:data-products");  
+        PrimeFaces.current().ajax().update("form:messages", "form:data-products");
     }
 }
