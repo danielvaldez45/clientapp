@@ -1,5 +1,7 @@
-package com.phoenix.clienteapp.DAO.clientREST;
+package com.phoenix.clienteapp.dao.clientREST;
 
+import com.phoenix.clienteapp.models.LoginRequest;
+import com.phoenix.clienteapp.models.LoginResponse;
 import com.phoenix.clienteapp.models.User;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -23,40 +25,40 @@ import org.primefaces.shaded.json.JSONObject;
  *
  */
 @ApplicationScoped
-public class AuthDAO implements Serializable {
+public class LoginDao implements Serializable {
 
     private String username;
     private String password;
     private String url;
 
-    AuthDAO() {
+    LoginDao() {
         //Parametros de configuracion
         this.url = url;
     }
 
-    //Get Request
-    //POST Request: Mando una peticion parametrizada
+    /**
+     * Hace peticiones a un API endpoint 'login'. A traves de una URL.
+     *
+     * @param user Representa un objeto user.
+     * @return true devuelve true si el usuario esta registrado en el sistema.
+     */
     public boolean login(User user) {
-        Client client;
+        String URL = "http://localhost:8181/login";
         Response response;
 
-        String username = user.getUsername();
-        String password = user.getPassword();
+        LoginRequest request = new LoginRequest(user.getUsername(), user.getPassword());
 
-        client = ClientBuilder.newClient();
-        WebTarget resourceTarget = client.target("http://192.168.1.62:8181/login");
+        Client client = ClientBuilder.newClient();
+        WebTarget resourceTarget = client.target(URL);
 
         response = resourceTarget.request()
-                .post(Entity.entity(user, MediaType.APPLICATION_JSON_TYPE));
+                .post(Entity.entity(request, MediaType.APPLICATION_JSON_TYPE));
 
         if (response.getStatus() == 200) {
-//            System.out.print(response.toString());
+            LoginResponse res = response.readEntity(LoginResponse.class);
+            JSONObject jsonRes = new JSONObject(res);
 
-            String res = response.readEntity(String.class);
-            System.out.println(res.toString());
-
-            JSONObject parser = new JSONObject(res);
-            if (parser.getBoolean("isRegister")) {
+            if (jsonRes.getInt("code") == 100) {
                 return true;
             }
         }

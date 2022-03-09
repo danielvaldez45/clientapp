@@ -17,18 +17,6 @@ stop_glassfishServer() {
 #[ $? == 0 ] && echo "Todo chido" || echo "Algo salio mal"
 
 
-#Empaqueta una aplicacion en un .war y despliega el comprimido en glassfish
-deploywar(){
- mvn clean package > logs/server.logs 2>&1
- isSuccess=$?
- if [[ $isSuccess != 0 ]]; then
-   cat logs/server.logs 
- fi
-
- undeploy
- deploy
-}
-
 #Sirve para desplegar un war en el servidor. target: Glassfish - $GLASSFISH_HOME
 deploy(){
  echo $1
@@ -42,3 +30,23 @@ undeploy(){
 }
 
 
+#Empaqueta una aplicacion en un .war y despliega el comprimido en glassfish
+deploywar(){
+ mvn clean package > logs/server.logs 2>&1
+ isSuccess=$?
+ if [[ $isSuccess != 0 ]]; then
+   cat logs/server.logs 
+ fi
+
+ undeploy
+ deploy
+ 
+ #if [[ $? == 0 ]]; then
+ #  echo "Abriendo el proyecto en el navegador: "
+ #  google-chrome --new-window http://localhost:8080/mavenproject3-1.0-SNAPSHOT
+ #
+ #  #Levantamos los logs del servidor en otra ventana de la terminal:
+ #  gnome-terminal --window --maximize --working-directory=/home/daniel/NetBeansProjects/mavenproject3
+ #  tail -f $GLASSFISH_HOME/glassfish/domains/domain1/logs/server.log
+ #fi
+}

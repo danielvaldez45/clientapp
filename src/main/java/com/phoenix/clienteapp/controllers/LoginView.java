@@ -1,6 +1,6 @@
-package com.phoenix.clienteapp.views;
+package com.phoenix.clienteapp.controllers;
 
-import com.phoenix.clienteapp.DAO.clientREST.AuthDAO;
+import com.phoenix.clienteapp.dao.clientREST.LoginDao;
 import com.phoenix.clienteapp.models.User;
 import com.phoenix.clienteapp.service.LoginService;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class LoginView implements Serializable {
 
     private User userLogin;
     @Inject
-    private AuthDAO clientRequest;
+    private LoginDao clientRequest;
 
     public LoginView() {
         this.userLogin = new User();
@@ -41,6 +41,7 @@ public class LoginView implements Serializable {
     }
 
     public void requestLogin() {
+        System.out.print(userLogin.toString());
         boolean userIsRegister = clientRequest.login(this.userLogin);
         if (userIsRegister) {
             FacesContext.getCurrentInstance().addMessage(
