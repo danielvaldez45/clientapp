@@ -1,4 +1,4 @@
-package com.phoenix.clienteapp.models;
+package com.phoenix.clienteapp.model;
 
 public class Product  {
 

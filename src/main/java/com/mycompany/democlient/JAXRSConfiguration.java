@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject3;
+package com.mycompany.democlient;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

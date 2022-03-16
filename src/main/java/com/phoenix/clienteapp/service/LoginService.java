@@ -15,6 +15,7 @@ public class LoginService extends HttpServlet {
 
      public void doGet(HttpServletResponse res)  throws ServletException, IOException {
         res.setContentType("text/html");
-        res.sendRedirect("http://www.google.com");
+        //res.sendRedirect("http://www.google.com");
+       
     }
 }

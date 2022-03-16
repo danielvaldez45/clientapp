@@ -1,10 +1,10 @@
-package com.phoenix.clienteapp.models;
+package com.phoenix.clienteapp.http;
 
 public class LoginRequest {
 
     private String username;
     private String password;
-
+    
     public LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;

@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject3.resources;
+package com.mycompany.democlient.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

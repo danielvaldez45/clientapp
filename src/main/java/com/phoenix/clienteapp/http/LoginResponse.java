@@ -1,13 +1,12 @@
-package com.phoenix.clienteapp.models;
+package com.phoenix.clienteapp.http;
 
-import javax.annotation.Generated;
+import com.phoenix.clienteapp.model.Auth;
 
-@Generated("jsonschema2pojo")
 public class LoginResponse {
 
     private Integer code;
     private String message;
-    private User user;
+    private Auth auth;
 
     public Integer getCode() {
         return code;
@@ -25,12 +24,12 @@ public class LoginResponse {
         this.message = message;
     }
 
-    public User getUser() {
-        return user;
+    public Auth getAuth() {
+        return auth;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAuth(Auth auth) {
+        this.auth = auth;
     }
 
 }

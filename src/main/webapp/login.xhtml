@@ -5,7 +5,6 @@
     <h:head>
         <title>Bienvenido</title>
     </h:head>
-    #{loginView}
     <h:body>
         <div class="card">
             <h:form id="registrationForm">
@@ -13,10 +12,10 @@
                     <p:messages/>
                     <h:panelGrid columns="2">
                         <p:outputLabel value="Username:"/>
-                        <p:inputText id="userName" value="#{viewLogin.userLogin.username}" label="UserName" />      
+                        <p:inputText id="userName" value="#{viewLogin.loginUser.username}" label="UserName" />
                         
                         <p:outputLabel value="Password:"/>
-                        <p:password id="password" value="#{viewLogin.userLogin.password}" label="Password"/>
+                        <p:password id="password" value="#{viewLogin.loginUser.password}" label="Password"/>
 
                         <p:outputLabel value=""/>
                         <p:commandButton action="#{viewLogin.requestLogin}" value="Entrar" update="registrationForm"/>

@@ -1,51 +1,46 @@
-package com.phoenix.clienteapp.controllers;
+package com.phoenix.clienteapp.view;
 
-import com.phoenix.clienteapp.dao.clientREST.LoginDao;
-import com.phoenix.clienteapp.models.User;
-import com.phoenix.clienteapp.service.LoginService;
-import java.io.IOException;
+import com.phoenix.clienteapp.controller.LoginController;
+import com.phoenix.clienteapp.model.Auth;
+
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 //@ManagedBean
 @Named("viewLogin")
 @RequestScoped
 public class LoginView implements Serializable {
 
-    private User userLogin;
+    private Auth loginAuth;
+
     @Inject
-    private LoginDao clientRequest;
+    private LoginController loginController;
 
     public LoginView() {
-        this.userLogin = new User();
+        this.loginAuth = new Auth();
     }
 
-    public User getUserLogin() {
-        return userLogin;
+    public Auth getLoginUser() {
+        return loginAuth;
     }
 
-    public void setUserLogin(User userLogin) {
-        this.userLogin = userLogin;
+    public void setLoginUser(Auth loginAuth) {
+        this.loginAuth = loginAuth;
     }
 
     public void newLogin() {
-        this.userLogin = new User();
+        this.loginAuth = new Auth();
     }
 
     public void requestLogin() {
-        System.out.print(userLogin.toString());
-        boolean userIsRegister = clientRequest.login(this.userLogin);
+        boolean userIsRegister = loginController.requestLogin(loginAuth);
         if (userIsRegister) {
             FacesContext.getCurrentInstance().addMessage(
-                    null, new FacesMessage("Acceso concedido. Bienvenido: " + this.userLogin.getUsername())
+                    null, new FacesMessage("Acceso concedido. Bienvenido: " + loginAuth.getUsername())
             );
 
         } else {
