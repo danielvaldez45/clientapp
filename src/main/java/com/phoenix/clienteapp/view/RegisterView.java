@@ -5,6 +5,8 @@ import com.phoenix.clienteapp.model.Auth;
 import com.phoenix.clienteapp.model.User;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,15 +40,15 @@ public class RegisterView implements Serializable {
 
     public void requestRegister() {
 
-        /*boolean userIsRegister = loginController.requestLogin(loginUser);
+        boolean userIsRegister = loginController.requestRegister(registerUser);
         if (userIsRegister) {
             FacesContext.getCurrentInstance().addMessage(
-                    null, new FacesMessage("Acceso concedido. Bienvenido: " + this.loginUser.getUsername())
+                    null, new FacesMessage("Usuario registrado correctamente. Inicia sesion para continuar: " + this.registerUser.getUsername())
             );
 
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Credenciales incorrectas"));
-        }*/
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error, no se pudo registrar el usuario."));
+        }
     }
 
     void redirect() {

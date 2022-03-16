@@ -27,7 +27,7 @@
                         <p:password id="password" value="#{viewRegister.registerUser.password}" label="contrasena"/>
 
                         <p:outputLabel value=""/>
-                        <p:commandButton action="#{viewLogin.requestRegister}" value="Registrase" update="registrationForm"/>
+                        <p:commandButton action="#{viewRegister.requestRegister()}" value="Registrase" update="registrationForm"/>
                     </h:panelGrid>
                 </p:panel>
             </h:form>

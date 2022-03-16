@@ -69,23 +69,22 @@ public class LoginDAO implements Serializable {
     /* *
        * Sirve para registrar un nuevo usuario en el sistema  
        * */
-    public boolean Register(RegisterRequest request) {
+    public boolean register(RegisterRequest request) {
         String endpoint = "/register";
         String URI = base_url + endpoint;
 
         Client client = ClientBuilder.newClient();
-        WebTarget resourceTarget = client.target(URI);
+        WebTarget resourceTarget = client.target("http://localhost:8181/register");
 
         response = resourceTarget
                 .request()
-                .post(Entity.entity(RegisterRequest.class, MediaType.APPLICATION_JSON_TYPE));
+                .post(Entity.entity(request, MediaType.APPLICATION_JSON_TYPE));
 
-        if (response.getStatus() == 200) {
-            RegisterResponse res = response.readEntity(RegisterResponse.class);
-            JSONObject jsonRes = new JSONObject(res);
+        if (response.getStatus() == 201) {
+            RegisterResponse registerResponse = response.readEntity(RegisterResponse.class);
+            
 
-            if (jsonRes.getInt("code") == 100) {
-
+            if (registerResponse.getCode() == 100) {
                 return true;
             }
         }
