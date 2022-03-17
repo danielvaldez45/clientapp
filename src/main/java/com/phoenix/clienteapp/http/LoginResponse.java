@@ -8,6 +8,15 @@ public class LoginResponse {
     private String message;
     private Auth auth;
 
+    public LoginResponse() {
+    }
+
+    public LoginResponse(Integer code, String message, Auth auth) {
+        this.code = code;
+        this.message = message;
+        this.auth = auth;
+    }
+
     public Integer getCode() {
         return code;
     }
@@ -30,6 +39,11 @@ public class LoginResponse {
 
     public void setAuth(Auth auth) {
         this.auth = auth;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginResponse{" + "code=" + code + ", message=" + message + ", auth=" + auth + '}';
     }
 
 }

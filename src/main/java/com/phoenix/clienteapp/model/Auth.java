@@ -10,7 +10,8 @@ package com.phoenix.clienteapp.model;
  */
 public class Auth {
 
-    private int id;
+    private int user_id;
+    private int auth_id;
     private String username;
     private String password;
     private String token;
@@ -23,18 +24,27 @@ public class Auth {
         this.password = password;
     }
 
-    public Auth(int id, String username, String password, String token) {
+    public Auth(int user_id, int auth_id, String username, String password) {
+        this.user_id = user_id;
+        this.auth_id = auth_id;
         this.username = username;
         this.password = password;
-        this.token = token;
     }
 
-    public int getId() {
-        return id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getAuth_id() {
+        return auth_id;
+    }
+
+    public void setAuth_id(int auth_id) {
+        this.auth_id = auth_id;
     }
 
     public String getUsername() {

@@ -20,7 +20,7 @@ public class LoginController {
         return true;
     }*/
     public boolean requestLogin(Auth loginAuth) {
-        LoginRequest request = new LoginRequest(loginAuth.getUsername(), loginAuth.getPassword());
+        LoginRequest request = new LoginRequest(loginAuth);
         boolean isSuccess = new LoginDAO().login(request);
         //Aqui setteare el token en el localstorage
         return isSuccess;

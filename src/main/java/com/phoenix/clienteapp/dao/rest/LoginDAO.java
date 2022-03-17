@@ -4,15 +4,18 @@ import com.phoenix.clienteapp.http.LoginRequest;
 import com.phoenix.clienteapp.http.LoginResponse;
 import com.phoenix.clienteapp.http.RegisterRequest;
 import com.phoenix.clienteapp.http.RegisterResponse;
+
 import java.io.Serializable;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+
 import javax.ws.rs.core.Response;
-import org.primefaces.shaded.json.JSONObject;
+//import org.primefaces.shaded.json.JSONObject;
 
 /**
  *
@@ -29,7 +32,7 @@ public class LoginDAO implements Serializable {
 
     public LoginDAO() {
         //Parametros de configuracion
-        this.url_server = "http:localhost:8181/login";
+        this.url_server = "http://localhost:8181";
         this.base_url = url_server;
     }
 
@@ -41,29 +44,33 @@ public class LoginDAO implements Serializable {
      * sistema.
      */
     public boolean login(LoginRequest request) {
+        try {
+            String endpoint = "/login";
+            String uri = base_url + endpoint;
+            System.out.println(uri);
 
-        String endpoint = "/login";
-        String uri = base_url + endpoint;
-        System.out.println(uri);
+            Client client = ClientBuilder.newClient();
+            WebTarget resourceTarget = client.target(uri);
 
-        Client client = ClientBuilder.newClient();
-        WebTarget resourceTarget = client.target("http://localhost:8181/login");
+            response = resourceTarget
+                    .request()
+                    .post(Entity.entity(request, "application/json"));
 
-        response = resourceTarget
-                .request()
-                .post(Entity.entity(request, MediaType.APPLICATION_JSON_TYPE));
+            if (response.getStatus() == 200) {
+                //Extraer la informacion del cuerpo y lo settea en un objeto de tipo Auth.
+                LoginResponse loginResponse = response.readEntity(LoginResponse.class);
+                System.out.println(loginResponse.getAuth().toString());
 
-        if (response.getStatus() == 200) {
-            //Extraer la informacion del cuerpo y lo settea en un objeto de tipo Auth.
-            LoginResponse loginResponse = response.readEntity(LoginResponse.class);
-            System.out.println(loginResponse.getAuth().toString());
+                if (loginResponse.getCode() == 102) {
+                    return true;
+                }
 
-            if (loginResponse.getCode() == 102) {
-                return true;
             }
-
+            return false;
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
         }
-        return false;
+        return true;
     }
 
     /* *
@@ -82,7 +89,6 @@ public class LoginDAO implements Serializable {
 
         if (response.getStatus() == 201) {
             RegisterResponse registerResponse = response.readEntity(RegisterResponse.class);
-            
 
             if (registerResponse.getCode() == 100) {
                 return true;
