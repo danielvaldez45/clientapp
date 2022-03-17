@@ -35,16 +35,24 @@ public class LoginView implements Serializable {
         this.loginAuth = new Auth();
     }
 
-    public void requestLogin() {
-        boolean userIsRegister = loginController.requestLogin(loginAuth);
-        if (userIsRegister) {
-            FacesContext.getCurrentInstance().addMessage(
-                    null, new FacesMessage("Acceso concedido. Bienvenido: " + loginAuth.getUsername())
-            );
+    public String requestLogin() {
+        FacesContext context = FacesContext.getCurrentInstance();
 
-        } else {
+        Auth auth = loginController.requestLogin(loginAuth);
+
+        if (auth.getToken().isEmpty()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Credenciales incorrectas"));
+            loginAuth.setUsername(null);
+            loginAuth.setPassword(null);
+            return "/app/home.xhtml?facesRedirect=true";
         }
+        //Settear la sesion
+        context.getExternalContext().getSessionMap().put("user_sesion", auth);
+
+        FacesContext
+                .getCurrentInstance()
+                .addMessage(null, new FacesMessage("Acceso concedido. Bienvenido: " + auth.getUsername()));
+        return "/login.xhtml?facesRedirect=true";
     }
 
 }

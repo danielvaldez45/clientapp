@@ -4,6 +4,7 @@ import com.phoenix.clienteapp.http.LoginRequest;
 import com.phoenix.clienteapp.http.LoginResponse;
 import com.phoenix.clienteapp.http.RegisterRequest;
 import com.phoenix.clienteapp.http.RegisterResponse;
+import com.phoenix.clienteapp.model.Auth;
 
 import java.io.Serializable;
 import javax.enterprise.context.ApplicationScoped;
@@ -43,12 +44,12 @@ public class LoginDAO implements Serializable {
      * @return true {boolean} Devuelve true si el usuario esta registrado en el
      * sistema.
      */
-    public boolean login(LoginRequest request) {
+    public Auth login(LoginRequest request) {
+        Auth auth = new Auth();
         try {
             String endpoint = "/login";
             String uri = base_url + endpoint;
-            System.out.println(uri);
-
+            
             Client client = ClientBuilder.newClient();
             WebTarget resourceTarget = client.target(uri);
 
@@ -59,18 +60,18 @@ public class LoginDAO implements Serializable {
             if (response.getStatus() == 200) {
                 //Extraer la informacion del cuerpo y lo settea en un objeto de tipo Auth.
                 LoginResponse loginResponse = response.readEntity(LoginResponse.class);
-                System.out.println(loginResponse.getAuth().toString());
+                //System.out.println(loginResponse.getAuth().toString());
 
                 if (loginResponse.getCode() == 102) {
-                    return true;
+                    return loginResponse.getAuth();
                 }
 
             }
-            return false;
+            return auth;
         } catch (ClassCastException ex) {
             ex.printStackTrace();
         }
-        return true;
+        return auth;
     }
 
     /* *
