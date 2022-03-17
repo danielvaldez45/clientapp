@@ -2,12 +2,13 @@ package com.phoenix.clienteapp.model;
 
 public class User {
 
+    private int user_id;
     private String name;
     private String lastname;
-    private int yearold;
+    private int age;
     private String username;
     private String password;
-    private Auth auth;
+    private String token;
 
     public User() {
     }
@@ -17,12 +18,21 @@ public class User {
         this.password = password;
     }
 
-    public User(String name, String lastname, int yearold, String username, String password) {
+    public User(int user_id, String name, String lastname, int age, String username, String password) {
+        this.user_id = user_id;
         this.name = name;
         this.lastname = lastname;
-        this.yearold = yearold;
+        this.age = age;
         this.username = username;
         this.password = password;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -57,24 +67,25 @@ public class User {
         this.lastname = lastname;
     }
 
-    public int getYearold() {
-        return yearold;
+    public int getAge() {
+        return age;
     }
 
-    public void setYearold(int yearold) {
-        this.yearold = yearold;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public Auth getAuth() {
-        return auth;
+    public String getToken() {
+        return token;
     }
 
-    public void setAuth(Auth auth) {
-        this.auth = auth;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
     public String toString() {
-        return "User{" + "name=" + name + ", lastname=" + lastname + ", username=" + username + ", password=" + password + ", auth=" + auth + '}';
+        return "User{" + "user_id=" + user_id + ", name=" + name + ", lastname=" + lastname + ", age=" + age + ", username=" + username + ", password=" + password + ", token=" + token + '}';
     }
+
 }
