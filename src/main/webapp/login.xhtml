@@ -8,13 +8,13 @@
     <h:body>
         <div class="card">
             <h:form id="registrationForm">
-                <p:panel header="Registration Form" style="width: 500px;">
+                <p:panel header="Iniciar Sesion" style="width: 500px;">
                     <p:messages/>
                     <h:panelGrid columns="2">
-                        <p:outputLabel value="Username:"/>
+                        <p:outputLabel value="Usuario: "/>
                         <p:inputText id="userName" value="#{viewLogin.loginUser.username}" label="UserName" />
                         
-                        <p:outputLabel value="Password:"/>
+                        <p:outputLabel value="Contrasena: "/>
                         <p:password id="password" value="#{viewLogin.loginUser.password}" label="Password"/>
 
                         <p:outputLabel value=""/>

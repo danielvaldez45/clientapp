@@ -10,7 +10,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-//@ManagedBean
 @Named("viewLogin")
 @RequestScoped
 public class LoginView implements Serializable {
@@ -48,11 +47,4 @@ public class LoginView implements Serializable {
         }
     }
 
-    void redirect() {
-        // Si me devuelve un true: Redireciona al usuario.
-        // Aqui me apoyare de un servlet
-        // String site = "http://www.newpage.com";
-        //response.setStatus(response.SC_MOVED_TEMPORARILY);
-        //response.setHeader("Location", site);
-    }
 }
