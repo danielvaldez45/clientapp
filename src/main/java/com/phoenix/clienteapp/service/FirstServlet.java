@@ -6,6 +6,7 @@ package com.phoenix.clienteapp.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,12 +30,13 @@ public class FirstServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+        session.getAttribute("att");
+
         response.sendRedirect(request.getContextPath() + "/index.xhtml");
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("sesion", "valor");
-        
+        //session.getAttribute("att"); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

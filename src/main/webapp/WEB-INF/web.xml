@@ -26,8 +26,17 @@
     
     <servlet-mapping>
         <servlet-name>FirstServlet</servlet-name>
-        <url-pattern>/firstServlet</url-pattern>
+        <url-pattern>/first</url-pattern>
     </servlet-mapping>
+    
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>com.phoenix.clienteapp.service.FilterApp</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
     
     <session-config>
         <session-timeout>

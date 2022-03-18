@@ -1,6 +1,7 @@
 package com.phoenix.clienteapp.service;
 
 import java.io.IOException;
+import javax.faces.context.FacesContext;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -13,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
+ * req
  *
  * @author daniel
  */
-@WebFilter("/app/*")
+//@WebFilter("/app/*")
 public class FilterApp implements Filter {
 
     @Override
@@ -31,12 +32,18 @@ public class FilterApp implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
+
         HttpSession session = request.getSession();
-        System.out.println("Sesion setteada por jsf: " + session);
-        if (session == null || session.getAttribute("user_id") == null) {
-            response.sendRedirect(request.getContextPath() + "/home.xhtml"); // No logged-in user found, so redirect to login page.
+
+        System.out.println(request.getRequestURI().toString());
+        if (session.getAttribute("sesion") == null) {
+            System.out.println("Sesion setteada por jsf: " + session.getAttribute("sesion"));
+            //String page = request.getContextPath() + "/app/home.xhtml";
+//           response.sendRedirect(page); // No logged-in user found, so redirect to login page.
+            response.sendRedirect(request.getContextPath() + "/index.xhtml"); // No logged-in user found, so redirect to login page.
+            return;
         } else {
-            chain.doFilter(req, res); // Logged-in user found, so just continue request.
+            chain.doFilter(req, res);
         }
     }
 
