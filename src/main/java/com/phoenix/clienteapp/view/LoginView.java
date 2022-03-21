@@ -15,34 +15,35 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.glassfish.jersey.inject.hk2.RequestContext;
 
 @Named("viewLogin")
 @RequestScoped
 public class LoginView implements Serializable {
-
-    private Auth loginAuth;
+    
+    private Auth userCredentials;
     private String requestedURI;
-
+    
     @Inject
     private LoginController loginController;
-
+    
     public LoginView() {
-        this.loginAuth = new Auth();
+        this.userCredentials = new Auth();
     }
-
+    
     public Auth getLoginUser() {
-        return loginAuth;
+        return userCredentials;
     }
-
-    public void setLoginUser(Auth loginAuth) {
-        this.loginAuth = loginAuth;
+    
+    public void setLoginUser(Auth userCredentials) {
+        this.userCredentials = userCredentials;
     }
-
+    
     public void newLogin() {
-        this.loginAuth = new Auth();
+        this.userCredentials = new Auth();
     }
-
-    public void requestLogin() throws IOException {
+    
+    public String requestLogin() throws IOException {
         //Contexto actual de la aplicacion.
         FacesContext contextFaces = FacesContext.getCurrentInstance();
 
@@ -51,25 +52,27 @@ public class LoginView implements Serializable {
         HttpServletResponse response = (HttpServletResponse) contextFaces.getExternalContext().getResponse();
 
         //Me loggeo en el sistema (backend)
-        Auth auth = loginController.requestLogin(loginAuth);
-
+        Auth auth = loginController.requestLogin(userCredentials);
+        System.out.println(auth.toString());
         if (!auth.getToken().isEmpty() && auth != null) {
             System.out.println("Hola mundo");
-
-            HttpSession session = (HttpSession) contextFaces.getExternalContext().getSession(true);
+            
+            HttpSession session = (HttpSession) contextFaces.getExternalContext().getSession(false);
             session.setAttribute("sesion", auth);
-
+            
             contextFaces.getCurrentInstance()
                     .addMessage(null, new FacesMessage("Acceso concedido. Bienvenido: " + auth.getUsername()));
+            //            response.sendRedirect("app/home.xhtml");
 
-            response.sendRedirect("app/home.xhtml");
-            //return "/app/product.xhtml?facesRedirect=true";
+            FacesContext.getCurrentInstance().getExternalContext().redirect("http://localhost:8080/mavenproject3/app/home.xhtml");
+//            return "/app/home.xhtml?facesRedirect=true";
             //return "/app/product.xhtml";
         } else {
             contextFaces.addMessage(null, new FacesMessage("Credenciales incorrectas"));
-            loginAuth.setUsername(null);
-            loginAuth.setPassword(null);
+            userCredentials.setUsername(null);
+            userCredentials.setPassword(null);
         }
+        return "/app/home.xhtml?facesRedirect=true";
     }
-
+    
 }

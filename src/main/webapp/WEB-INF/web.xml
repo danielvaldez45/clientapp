@@ -2,19 +2,31 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>com.phoenix.clienteapp.service.FilterApp</filter-class>
+        <load-on-startup>1</load-on-startup>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
+    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>FirstServlet</servlet-name>
         <servlet-class>com.phoenix.clienteapp.service.FirstServlet</servlet-class>
     </servlet>
+    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -28,15 +40,6 @@
         <servlet-name>FirstServlet</servlet-name>
         <url-pattern>/first</url-pattern>
     </servlet-mapping>
-    
-    <filter>
-        <filter-name>SecurityFilter</filter-name>
-        <filter-class>com.phoenix.clienteapp.service.FilterApp</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>SecurityFilter</filter-name>
-        <url-pattern>/app/*</url-pattern>
-    </filter-mapping>
     
     <session-config>
         <session-timeout>

@@ -45,44 +45,40 @@ public class LoginDAO implements Serializable {
      * sistema.
      */
     public Auth login(LoginRequest request) {
-        Auth auth = new Auth();
-        try {
-            String endpoint = "/login";
-            String uri = base_url + endpoint;
-            
-            Client client = ClientBuilder.newClient();
-            WebTarget resourceTarget = client.target(uri);
+        Auth data = new Auth();
 
-            response = resourceTarget
-                    .request()
-                    .post(Entity.entity(request, "application/json"));
-
-            if (response.getStatus() == 200) {
-                //Extraer la informacion del cuerpo y lo settea en un objeto de tipo Auth.
-                LoginResponse loginResponse = response.readEntity(LoginResponse.class);
-                //System.out.println(loginResponse.getAuth().toString());
-
-                if (loginResponse.getCode() == 102) {
-                    return loginResponse.getAuth();
-                }
-
-            }
-            return auth;
-        } catch (ClassCastException ex) {
-            ex.printStackTrace();
-        }
-        return auth;
-    }
-
-    /* *
-       * Sirve para registrar un nuevo usuario en el sistema  
-       * */
-    public boolean register(RegisterRequest request) {
-        String endpoint = "/register";
-        String URI = base_url + endpoint;
+        String endpoint = "/login";
+        String requestedURI = base_url + endpoint;
 
         Client client = ClientBuilder.newClient();
-        WebTarget resourceTarget = client.target("http://localhost:8181/register");
+        WebTarget resourceTarget = client.target(requestedURI);
+
+        response = resourceTarget
+                .request()
+                .post(Entity.entity(request, "application/json"));
+
+        if (response.getStatus() == 200) {
+
+            LoginResponse loginResponse = response.readEntity(LoginResponse.class);
+
+            if (loginResponse.getCode() == 102) {
+                return loginResponse.getData();
+            }
+        }
+        return data;
+    }
+
+    /**
+     * Sirve para registrar un nuevo usuario en el sistema
+     *
+     *
+     */
+    public boolean register(RegisterRequest request) {
+        String endpoint = "/register";
+        String requestedURI = base_url + endpoint;
+
+        Client client = ClientBuilder.newClient();
+        WebTarget resourceTarget = client.target(requestedURI);
 
         response = resourceTarget
                 .request()
@@ -97,4 +93,19 @@ public class LoginDAO implements Serializable {
         }
         return false;
     }
+
+    /**
+     * Obtiene la data de las respuesta.
+     *
+     * @param response {Response} Es un objeto de tipo respuesta.
+     * @return Auth {Auth} Representa un objeto de tipo autenticacion.
+     *
+     */
+    /*public Auth getDataResponse(LoginResponse response) {
+
+        if (loginResponse.getCode() == 102) {
+            return loginResponse.getData();
+        }
+        return null;
+    }*/
 }

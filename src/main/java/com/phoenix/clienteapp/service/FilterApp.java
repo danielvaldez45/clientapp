@@ -36,15 +36,21 @@ public class FilterApp implements Filter {
         HttpSession session = request.getSession();
 
         System.out.println(request.getRequestURI().toString());
+        System.out.println("sesion inizializada: " + session.getAttribute("sesion"));
+        System.out.println("req object : " + request.getRequestURI());
+        System.out.println("req object : " + request.getRequestURL());
+        System.out.println("req object : " + request.getContextPath());
+
         if (session.getAttribute("sesion") == null) {
             System.out.println("Sesion setteada por jsf: " + session.getAttribute("sesion"));
             //String page = request.getContextPath() + "/app/home.xhtml";
 //           response.sendRedirect(page); // No logged-in user found, so redirect to login page.
-            response.sendRedirect(request.getContextPath() + "/index.xhtml"); // No logged-in user found, so redirect to login page.
-            return;
-        } else {
-            chain.doFilter(req, res);
+            System.out.println("redirect to: " + request.getContextPath() + "/app/home.xhtml" + " http://localhost:8080/mavenproject3/app/home.xhtml");
+            response.sendRedirect("http://localhost:8080/mavenproject3/login.xhtml"); // No logged-in user found, so redirect to login page.
+//            chain.doFilter(request, response);
         }
+        
+        chain.doFilter(req, res);
     }
 
     @Override
